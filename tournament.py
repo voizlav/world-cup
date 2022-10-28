@@ -11,11 +11,12 @@ N = 1000
 def main():
     usage = "Usage: python tournament.py FILENAME"
 
-    # Ensure correct usage
+    # Check the command-line input
     if len(sys.argv) != 2:
         print(usage)
         sys.exit(1)
-
+    
+    # Ensure correct file extension
     if sys.argv[1][len(sys.argv[1]) - 3:] != "csv":
         print(usage)
         sys.exit(1)
@@ -34,7 +35,7 @@ def main():
     # Simulate N tournaments and keep track of win counts
     simulation = 0
     while simulation != N:
-        winner = simulate_tournament(teams)
+        winner = simulateTournament(teams)
         counts[winner] += 1
         simulation += 1
 
@@ -45,7 +46,7 @@ def main():
     sys.exit(0)
 
 
-def simulate_game(team1, team2):
+def simulateGame(team1, team2):
     """Simulate a game. Return True if team1 wins, False otherwise."""
     rating1 = team1["rating"]
     rating2 = team2["rating"]
@@ -53,13 +54,13 @@ def simulate_game(team1, team2):
     return random.random() < probability
 
 
-def simulate_round(teams):
+def simulateRound(teams):
     """Simulate a round. Return a list of winning teams."""
     winners = []
 
     # Simulate games for all pairs of teams
     for i in range(0, len(teams), 2):
-        if simulate_game(teams[i], teams[i + 1]):
+        if simulateGame(teams[i], teams[i + 1]):
             winners.append(teams[i])
         else:
             winners.append(teams[i + 1])
@@ -67,13 +68,13 @@ def simulate_round(teams):
     return winners
 
 
-def simulate_tournament(teams):
+def simulateTournament(teams):
     """Simulate a tournament. Return name of winning team."""
 
     winner = teams
     # Continue simulating rounds until there is a winner
     while len(winner) != 1:
-        winner = simulate_round(winner)
+        winner = simulateRound(winner)
 
     return winner[0]['team']
 
