@@ -1,5 +1,3 @@
-# Simulate a sports tournament
-
 import csv
 import sys
 import random
@@ -13,13 +11,11 @@ def main():
 
     # Check the command-line input
     if len(sys.argv) != 2:
-        print(usage)
-        sys.exit(1)
+        sys.exit(usage)
     
     # Ensure correct file extension
     if sys.argv[1][len(sys.argv[1]) - 3:] != "csv":
-        print(usage)
-        sys.exit(1)
+        sys.exit(usage)
 
     # Load data
     with open(sys.argv[1]) as db:
@@ -29,7 +25,7 @@ def main():
     teams, counts = [], {}
     # Arrange data into teams and counter
     for team in data[1:]:
-        teams.append({'team': team[0], 'rating': int(team[1])})
+        teams.append({"team": team[0], "rating": int(team[1])})
         counts[team[0]] = 0
 
     # Simulate N tournaments and keep track of win counts
@@ -76,7 +72,7 @@ def simulateTournament(teams):
     while len(winner) != 1:
         winner = simulateRound(winner)
 
-    return winner[0]['team']
+    return winner[0]["team"]
 
 
 if __name__ == "__main__":
